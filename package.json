@@ -1,0 +1,17 @@
+{
+  "name": "lang",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lang.js",
+  "dependencies": {
+    "js-beautify": "^1.7.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node lang.js",
+    "source": "node lang.js -s > js.js && js-beautify js.js && echo && rm js.js",
+    "ast": "node lang.js -a"
+  },
+  "author": "",
+  "license": "ISC"
+}

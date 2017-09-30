@@ -11,14 +11,17 @@ let t = {
     LINE_BREAK: 'LINE_BREAK',
     WHITE_SPACE: 'WHITE_SPACE',
     COMMENT: 'COMMENT',
-    BLOCK_COMMENT: 'BLOCK_COMMENT'
+    BLOCK_COMMENT: 'BLOCK_COMMENT',
+    MINUS: 'MINUS',
+    LEFT_CURL: 'LEFT_CURL',
+    RIGHT_CURL: 'RIGHT_CURL'
 }
 
 module.exports = {
     tokens: t,
     defs: [
         // Tokens
-        {name:t.KEY_WORD, regex:String.raw`^(var)`},
+        {name:t.KEY_WORD, regex:String.raw`^(var )`},
         {name:t.IDENTIFIER, regex:String.raw`^([a-zA-Z][a-zA-Z0-9_]*)`},
 
         // Symbols
@@ -32,7 +35,10 @@ module.exports = {
         {name:t.INTEGER, regex:String.raw`^([0-9]+)`},
 
         // Operators
-        {name:t.EQUALS, regex:String.raw`^=`},
+        {name:t.EQUALS, regex:String.raw`^\s*=\s*`},
+        {name:t.MINUS, regex:String.raw`^\s*-\s*`},
+        {name:t.LEFT_CURL, regex:String.raw`^{`},
+        {name:t.RIGHT_CURL, regex:String.raw`^}`},
 
         // White space
         {name:t.LINE_BREAK, regex:String.raw`^\n`},
