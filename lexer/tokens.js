@@ -23,6 +23,10 @@ let t = {
 module.exports = {
     tokens: t,
     defs: [
+        // Comments
+        {name:t.COMMENT, regex:String.raw`^\s*\/\/.*\n()`},
+        {name:t.BLOCK_COMMENT, regex:String.raw`^\s*\/\*[\s\S]*\*\/()`},
+
         // Tokens
         {name:t.KEY_WORD, regex:String.raw`^(var|retry)\s`},
         {name:t.IDENTIFIER, regex:String.raw`^([a-zA-Z][a-zA-Z0-9_]*)`},
@@ -50,7 +54,4 @@ module.exports = {
         {name:t.LINE_BREAK, regex:String.raw`^\n`},
         {name:t.WHITE_SPACE, regex:String.raw`^\s+`},
 
-        // Comments
-        {name:t.COMMENT, regex:String.raw`^\/\/.*\n()`},
-        {name:t.BLOCK_COMMENT, regex:String.raw`^\/\*[\s\S]*\*\/()`},
 ]}

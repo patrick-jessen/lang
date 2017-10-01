@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node lang.js",
     "source": "node lang.js -s > js.js && js-beautify js.js && echo && rm js.js",
-    "ast": "node lang.js -a"
+    "ast": "node lang.js -a",
+    "tokens": "node lang.js -t"
   },
   "author": "",
   "license": "ISC"

@@ -58,6 +58,9 @@ function generateStateCheck(ast) {
         case '=':
             cond = 'compState == "="'
             break
+        default:
+            cond = ast.check
+            break
     }
 
     return `

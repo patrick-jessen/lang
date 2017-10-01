@@ -5,6 +5,7 @@ let generate = require('./generator/generate')
 
 let showSource = false
 let showAST = false
+let showTokens = false
 process.argv.forEach(function (val) {
     switch(val) {
         case '-s':
@@ -12,6 +13,9 @@ process.argv.forEach(function (val) {
             break
         case '-a':
             showAST = true
+            break
+        case '-t':
+        showTokens = true
             break
     }
 });
@@ -31,6 +35,10 @@ if(showSource) {
 }
 if(showAST) {
     console.log(ast)
+    return
+}
+if(showTokens) {
+    console.log(tokens)
     return
 }
 
