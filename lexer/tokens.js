@@ -14,15 +14,19 @@ let t = {
     BLOCK_COMMENT: 'BLOCK_COMMENT',
     MINUS: 'MINUS',
     LEFT_CURL: 'LEFT_CURL',
-    RIGHT_CURL: 'RIGHT_CURL'
+    RIGHT_CURL: 'RIGHT_CURL',
+    GREATER_THAN: 'GREATER_THAN',
+    LESS_THAN: 'LESS_THAN',
+    STATE_CHECK: 'STATE_CHECK'
 }
 
 module.exports = {
     tokens: t,
     defs: [
         // Tokens
-        {name:t.KEY_WORD, regex:String.raw`^(var )`},
+        {name:t.KEY_WORD, regex:String.raw`^(var|retry)\s`},
         {name:t.IDENTIFIER, regex:String.raw`^([a-zA-Z][a-zA-Z0-9_]*)`},
+        {name:t.STATE_CHECK, regex:String.raw`^\s*(.*):\s`},
 
         // Symbols
         {name:t.LEFT_PAREN, regex:String.raw`^\(`},
@@ -36,6 +40,8 @@ module.exports = {
 
         // Operators
         {name:t.EQUALS, regex:String.raw`^\s*=\s*`},
+        {name:t.GREATER_THAN, regex:String.raw`^\s*>\s*`},
+        {name:t.LESS_THAN, regex:String.raw`^\s*<\s*`},
         {name:t.MINUS, regex:String.raw`^\s*-\s*`},
         {name:t.LEFT_CURL, regex:String.raw`^{`},
         {name:t.RIGHT_CURL, regex:String.raw`^}`},

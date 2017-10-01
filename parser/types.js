@@ -1,8 +1,12 @@
 module.exports = {
     STRING: 'STRING',
+    INTEGER: 'INTEGER',
     FUNCTION_CALL: 'FUNCTION_CALL',
     VAR_DECL: 'VAR_DECL',
     VAR_REF: 'VAR_REF',
     FAIL: 'FAIL',
-    BLOCK: 'BLOCK'
+    BLOCK: 'BLOCK',
+    RETRY: 'RETRY',
+    CONDITIONAL: 'CONDITIONAL',
+    STATE_CHECK: 'STATE_CHECK',
 }

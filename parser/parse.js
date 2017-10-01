@@ -23,6 +23,8 @@ function parseStatement(tokens, ast) {
     if(n > 0) return n
     n = parseString(tokens, ast)
     if(n > 0) return n
+    n = parseInteger(tokens, ast)
+    if(n > 0) return n
     n = parseVarDecl(tokens, ast)
     if(n > 0) return n
     n = parseVarRef(tokens, ast)
@@ -33,8 +35,46 @@ function parseStatement(tokens, ast) {
     if(n > 0) return n
     n = parseWhiteSpace(tokens, ast)
     if(n > 0) return n
+    n = parseRetry(tokens, ast)
+    if(n > 0) return n
+    n = parseStateCheck(tokens, ast)
+    if(n > 0) return n
 
     console.warn('PARSER: unknown statement:', tokens)
+    return 1
+}
+
+function parseStateCheck(tokens, ast) {
+    if(tokens[0].token != t.STATE_CHECK) return
+
+    let astObj = {
+        type: astDefs.STATE_CHECK,
+        check: tokens[0].value,
+        body: []
+    }
+
+    let n = parseStatement(tokens.slice(1), astObj.body)
+    addToAST(ast, astObj)
+
+    return n+1
+}
+
+function parseInteger(tokens, ast) {
+    if(tokens[0].token != astDefs.INTEGER) return
+
+    addToAST(ast, {
+        type: astDefs.INTEGER,
+        value: tokens[0].value
+    })
+    return 1
+}
+
+function parseRetry(tokens, ast) {
+    if(tokens[0].token != t.KEY_WORD || tokens[0].value != 'retry') return
+
+    addToAST(ast, {
+        type: astDefs.RETRY
+    })
     return 1
 }
 
@@ -75,7 +115,7 @@ function parseCurlyBlock(tokens, ast) {
 }
 
 function parseFail(tokens, ast) {
-    if(tokens[0].token != t.MINUS) return
+    if(tokens[0].token != t.KEY_WORD || tokens[0].value != 'fail') return
 
     let astObj = {
         type: astDefs.FAIL,

@@ -1,5 +1,6 @@
 let lex = require('./lexer/lex')
 let parse = require('./parser/parse')
+let optimize = require('./optimizer/optimize')
 let generate = require('./generator/generate')
 
 let showSource = false
@@ -22,6 +23,7 @@ let source = fs.readFileSync('./source.j','utf8')
 // Compile
 let tokens = lex(source)
 let ast = parse(tokens)
+ast = optimize(ast)
 let src = generate(ast)
 if(showSource) {
     console.log(src)

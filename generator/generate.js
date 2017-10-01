@@ -24,6 +24,8 @@ function generateStatement(ast) {
     switch(ast.type) {
         case astDefs.STRING:
             return `"${ast.value}"`
+        case astDefs.INTEGER:
+            return `${ast.value}`
         case astDefs.FUNCTION_CALL:
             return generateFunctionCall(ast)
         case astDefs.VAR_DECL:
@@ -34,9 +36,34 @@ function generateStatement(ast) {
             return generateFail(ast)
         case astDefs.BLOCK:
             return generateCurlyBlock(ast)
+        case astDefs.STATE_CHECK:
+            return generateStateCheck(ast)
         default:
             console.warn('GEN: Invalid statement', ast)
     }
+}
+
+function generateStateCheck(ast) {
+    let cond = ''
+    switch(ast.check) {
+        case 'fail':
+            cond = 'errorState'
+            break
+        case '<':
+            cond = 'compState == "<"'
+            break
+        case '>':
+            cond = 'compState == ">"'
+            break
+        case '=':
+            cond = 'compState == "="'
+            break
+    }
+
+    return `
+    if(${cond}){
+        ${generateBlock(ast.body)}
+    }`
 }
 
 function generateCurlyBlock(ast) {
@@ -74,6 +101,8 @@ module.exports = function(ast) {
 
     let src = `
     let errorState = false
+    let compState = ''
+
     async function main() {
         ${libCode}
         ${code}
